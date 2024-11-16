@@ -71,7 +71,7 @@
         <div class="search-bar">
             <input type="text" id="search" placeholder="Search for products...">
         </div>
-        <div class="product-grid">
+        <div class="product-grid" id="productGrid">
             <!-- Product 1 -->
             <div class="product">
                 <img src="766BD135-0A84-441C-9846-2063C75AE497.png" alt="Chocolate Chip Cookie">
@@ -98,5 +98,29 @@
             </div>
         </div>
     </div>
+    <script>
+        const searchInput = document.getElementById('search');
+        const productGrid = document.getElementById('productGrid');
+        const products = Array.from(productGrid.children);
+
+        // Function to filter and sort products
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            
+            // Filter and sort products
+            const filteredProducts = products.filter(product => {
+                const title = product.querySelector('h3').innerText.toLowerCase();
+                return title.includes(query);
+            }).sort((a, b) => {
+                const titleA = a.querySelector('h3').innerText.toLowerCase();
+                const titleB = b.querySelector('h3').innerText.toLowerCase();
+                return titleA.localeCompare(titleB);
+            });
+
+            // Clear and re-add products to the grid
+            productGrid.innerHTML = '';
+            filteredProducts.forEach(product => productGrid.appendChild(product));
+        });
+    </script>
 </body>
 </html>
