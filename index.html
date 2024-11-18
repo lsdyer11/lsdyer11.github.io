@@ -6,45 +6,50 @@
     <title>Dropshipper Feed</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f7f7f7;
+            background-color: #f9f9f9;
+            color: #333;
         }
         .container {
             max-width: 1200px;
             margin: 20px auto;
             padding: 20px;
             background: #ffffff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             text-align: center;
         }
         h1 {
-            color: #333;
+            color: #007BFF;
         }
-        .search-bar {
-            margin-bottom: 20px;
-        }
-        input[type="text"] {
+        .search-bar input[type="text"] {
             width: 80%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 5px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
         }
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            justify-content: center;
+            margin-top: 20px;
         }
         .product {
-            background: #fafafa;
-            padding: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
+            transition: transform 0.2s ease;
             text-align: center;
+        }
+        .product:hover {
+            transform: translateY(-5px);
         }
         .product img {
             max-width: 100%;
@@ -53,16 +58,18 @@
         }
         .product h3 {
             margin: 10px 0;
-            color: #555;
+            font-size: 18px;
+            color: #444;
         }
         .product a {
             text-decoration: none;
             color: #007BFF;
+            font-weight: bold;
         }
         .product a:hover {
             text-decoration: underline;
         }
-        /* Side menu styling */
+        /* Menu button */
         .menu-button {
             position: fixed;
             top: 20px;
@@ -71,21 +78,22 @@
             color: white;
             border: none;
             padding: 10px 15px;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        /* Side menu */
         .side-menu {
             position: fixed;
             top: 0;
             left: 0;
             height: 100%;
-            width: 250px;
+            width: 300px;
             background-color: #ffffff;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
             transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s ease;
             z-index: 1000;
             padding: 20px;
             box-sizing: border-box;
@@ -94,16 +102,27 @@
             transform: translateX(0);
         }
         .side-menu h3 {
-            color: #333;
-            margin-bottom: 15px;
+            font-size: 18px;
+            color: #007BFF;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .side-menu .content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .side-menu .content.open {
+            max-height: 500px;
         }
         .side-menu p, .side-menu a {
             color: #555;
-            margin: 10px 0;
-            text-decoration: none;
+            margin: 5px 0;
+            font-size: 14px;
         }
         .side-menu a {
             color: #007BFF;
+            text-decoration: none;
         }
         .side-menu a:hover {
             text-decoration: underline;
@@ -122,31 +141,24 @@
 </head>
 <body>
     <!-- Side menu button -->
-    <button class="menu-button" onclick="toggleMenu()">☰ Menu</button>
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
 
     <!-- Side menu -->
     <div class="side-menu" id="sideMenu">
         <button class="close-button" onclick="toggleMenu()">✖</button>
-        <div id="contactUs">
-            <h3>Contact Us</h3>
+        <h3 onclick="toggleContent('contactUs')">Contact Us</h3>
+        <div id="contactUs" class="content">
             <p>Phone: (123) 456-7890</p>
             <p>Email: contact@dropshipperfeed.com</p>
         </div>
-        <div id="aboutUs">
-            <h3>About Us</h3>
-            <p>
-                Welcome to Dropshipper Feed, your ultimate resource for discovering amazing products. 
-                Our goal is to simplify your shopping experience by curating a collection of items ideal 
-                for dropshipping. We aim to help aspiring and experienced dropshippers by connecting them 
-                to popular products, offering efficient and affordable solutions.
-            </p>
-            <p>
-                Browse through our catalog to find the perfect products for your online store, 
-                and let us help you grow your business effortlessly!
-            </p>
+        <h3 onclick="toggleContent('aboutUs')">About Us</h3>
+        <div id="aboutUs" class="content">
+            <p>Welcome to Dropshipper Feed, your ultimate resource for discovering amazing products. 
+               We connect dropshippers to popular products, offering a seamless shopping experience.</p>
+            <p>Our curated catalog is designed to help you easily source products to grow your online business!</p>
         </div>
-        <div id="youtube">
-            <h3>YouTube</h3>
+        <h3 onclick="toggleContent('youtube')">YouTube</h3>
+        <div id="youtube" class="content">
             <a href="https://www.youtube.com" target="_blank">Visit Dropshipper Feed's YouTube Channel</a>
         </div>
     </div>
@@ -189,11 +201,8 @@
         const productGrid = document.getElementById('productGrid');
         const products = Array.from(productGrid.children);
 
-        // Function to filter and sort products
         const filterAndSortProducts = () => {
             const query = searchInput.value.toLowerCase();
-
-            // Filter and sort products
             const filteredProducts = products.filter(product => {
                 const title = product.querySelector('h3').innerText.toLowerCase();
                 return title.includes(query);
@@ -202,15 +211,12 @@
                 const titleB = b.querySelector('h3').innerText.toLowerCase();
                 return titleA.localeCompare(titleB);
             });
-
-            // Clear and re-add products to the grid
             productGrid.innerHTML = '';
             filteredProducts.forEach(product => productGrid.appendChild(product));
         };
 
         searchInput.addEventListener('input', filterAndSortProducts);
 
-        // Sort products A-Z on page load
         window.addEventListener('load', () => {
             products.sort((a, b) => {
                 const titleA = a.querySelector('h3').innerText.toLowerCase();
@@ -220,10 +226,14 @@
             products.forEach(product => productGrid.appendChild(product));
         });
 
-        // Side menu toggle
         const sideMenu = document.getElementById('sideMenu');
         const toggleMenu = () => {
             sideMenu.classList.toggle('open');
+        };
+
+        const toggleContent = (id) => {
+            const content = document.getElementById(id);
+            content.classList.toggle('open');
         };
     </script>
 </body>
