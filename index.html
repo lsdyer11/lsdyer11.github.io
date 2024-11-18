@@ -10,7 +10,6 @@
             margin: 0;
             padding: 0;
             background-color: #f7f7f7;
-            text-align: center;
         }
         .container {
             max-width: 1200px;
@@ -19,6 +18,7 @@
             background: #ffffff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
+            text-align: center;
         }
         h1 {
             color: #333;
@@ -62,9 +62,95 @@
         .product a:hover {
             text-decoration: underline;
         }
+        /* Side menu styling */
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: #ffffff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .side-menu.open {
+            transform: translateX(0);
+        }
+        .side-menu h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .side-menu p, .side-menu a {
+            color: #555;
+            margin: 10px 0;
+            text-decoration: none;
+        }
+        .side-menu a {
+            color: #007BFF;
+        }
+        .side-menu a:hover {
+            text-decoration: underline;
+        }
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #555;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
     </style>
 </head>
 <body>
+    <!-- Side menu button -->
+    <button class="menu-button" onclick="toggleMenu()">☰ Menu</button>
+
+    <!-- Side menu -->
+    <div class="side-menu" id="sideMenu">
+        <button class="close-button" onclick="toggleMenu()">✖</button>
+        <div id="contactUs">
+            <h3>Contact Us</h3>
+            <p>Phone: (123) 456-7890</p>
+            <p>Email: contact@dropshipperfeed.com</p>
+        </div>
+        <div id="aboutUs">
+            <h3>About Us</h3>
+            <p>
+                Welcome to Dropshipper Feed, your ultimate resource for discovering amazing products. 
+                Our goal is to simplify your shopping experience by curating a collection of items ideal 
+                for dropshipping. We aim to help aspiring and experienced dropshippers by connecting them 
+                to popular products, offering efficient and affordable solutions.
+            </p>
+            <p>
+                Browse through our catalog to find the perfect products for your online store, 
+                and let us help you grow your business effortlessly!
+            </p>
+        </div>
+        <div id="youtube">
+            <h3>YouTube</h3>
+            <a href="https://www.youtube.com" target="_blank">Visit Dropshipper Feed's YouTube Channel</a>
+        </div>
+    </div>
+
     <div class="container">
         <h1>Welcome to Dropshipper Feed</h1>
         <div class="search-bar">
@@ -73,39 +159,40 @@
         <div class="product-grid" id="productGrid">
             <!-- Product 1 -->
             <div class="product">
-                <img src="bag.jpeg" alt="Alpaca">
+                <img src="bag.jpeg" alt="Travel Bag">
                 <h3>Foldable Travel Bag</h3>
-                <a href="https://www.aliexpress.us/item/3256805956656466.html?businessType=ProductDetail&srcSns=sns_Copy&spreadType=socialShare&bizType=ProductDetail&social_params=21679143533&aff_fcid=18a91fa875f6457c8748a1301b0f20fb-1731787778036-09386-_mP9dlGJ&tt=CPS_NORMAL&aff_fsk=_mP9dlGJ&aff_platform=shareComponent-detail&sk=_mP9dlGJ&aff_trace_key=18a91fa875f6457c8748a1301b0f20fb-1731787778036-09386-_mP9dlGJ&shareId=21679143533&businessType=ProductDetail&platform=AE&terminal_id=a5a6fc6afefe48f6b09ba5fd216ea08a&gatewayAdapt=glo2usa4itemAdapt">View Product</a>
+                <a href="#">View Product</a>
             </div>
             <!-- Product 2 -->
             <div class="product">
-                <img src="net.jpeg" alt="Alpaca">
+                <img src="net.jpeg" alt="Basketball Net">
                 <h3>Portable Basketball Net</h3>
-                <a href="https://www.aliexpress.us/item/3256806676465659.html?spm=a2g0o.imagesearchproductlist.main.1.1576jxlmjxlm9i&pdp_npi=4%40dis%21USD%2137.97%2129.47%21%21%21273.76%21212.48%21%402103010b17318910117173407ec744%2112000038550811384%21sea%21US%210%21ABX&curPageLogUid=4n1nl75AGGd4&utparam-url=scene%3Aimage_search%7Cquery_from%3Apc_web_image_search&gatewayAdapt=4itemAdapt">View Product</a>
+                <a href="#">View Product</a>
             </div>
             <!-- Product 3 -->
             <div class="product">
                 <img src="alpaca.jpeg" alt="Alpaca">
                 <h3>Alpaca Figurine</h3>
-                <a href="https://example.com/product3">View Product</a>
+                <a href="#">View Product</a>
             </div>
             <!-- Product 4 -->
             <div class="product">
                 <img src="alpaca.jpeg" alt="Alpaca">
                 <h3>Alpaca Keychain</h3>
-                <a href="https://example.com/product4">View Product</a>
+                <a href="#">View Product</a>
             </div>
         </div>
     </div>
+
     <script>
         const searchInput = document.getElementById('search');
         const productGrid = document.getElementById('productGrid');
         const products = Array.from(productGrid.children);
 
         // Function to filter and sort products
-        searchInput.addEventListener('input', () => {
+        const filterAndSortProducts = () => {
             const query = searchInput.value.toLowerCase();
-            
+
             // Filter and sort products
             const filteredProducts = products.filter(product => {
                 const title = product.querySelector('h3').innerText.toLowerCase();
@@ -119,7 +206,25 @@
             // Clear and re-add products to the grid
             productGrid.innerHTML = '';
             filteredProducts.forEach(product => productGrid.appendChild(product));
+        };
+
+        searchInput.addEventListener('input', filterAndSortProducts);
+
+        // Sort products A-Z on page load
+        window.addEventListener('load', () => {
+            products.sort((a, b) => {
+                const titleA = a.querySelector('h3').innerText.toLowerCase();
+                const titleB = b.querySelector('h3').innerText.toLowerCase();
+                return titleA.localeCompare(titleB);
+            });
+            products.forEach(product => productGrid.appendChild(product));
         });
+
+        // Side menu toggle
+        const sideMenu = document.getElementById('sideMenu');
+        const toggleMenu = () => {
+            sideMenu.classList.toggle('open');
+        };
     </script>
 </body>
 </html>
