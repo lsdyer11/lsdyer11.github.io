@@ -6,163 +6,154 @@
     <title>Dropshipper Feed</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background: linear-gradient(135deg, #f7d9d9, #f9f7d9, #d9f7f9);
             color: #333;
         }
+
         .container {
             max-width: 1200px;
             margin: 20px auto;
             padding: 20px;
-            background: #ffffff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            text-align: center;
         }
+
         h1 {
-            color: #007BFF;
+            color: #333;
         }
-        .search-bar input[type="text"] {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
+
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
             border-radius: 5px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
             font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
+
+        .menu-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(180deg, #007BFF, #0056b3);
+            color: #fff;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        .menu-panel.open {
+            transform: translateX(0);
+        }
+
+        .menu-panel h2 {
+            margin-top: 0;
+        }
+
+        .menu-item {
+            margin: 10px 0;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            margin-top: 20px;
         }
+
         .product {
-            background: #f9f9f9;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            background: #fafafa;
+            padding: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
+            border-radius: 5px;
             text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .product:hover {
             transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
+
         .product img {
             max-width: 100%;
             height: auto;
             border-radius: 5px;
         }
+
         .product h3 {
             margin: 10px 0;
-            font-size: 18px;
-            color: #444;
+            color: #555;
         }
+
         .product a {
             text-decoration: none;
             color: #007BFF;
-            font-weight: bold;
         }
+
         .product a:hover {
             text-decoration: underline;
         }
-        /* Menu button */
-        .menu-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            font-size: 18px;
+
+        .collapsible-content {
+            display: none;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .collapsible {
             cursor: pointer;
-            border-radius: 50%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
         }
-        /* Side menu */
-        .side-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 300px;
-            background-color: #ffffff;
-            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .side-menu.open {
-            transform: translateX(0);
-        }
-        .side-menu h3 {
-            font-size: 18px;
-            color: #007BFF;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-        .side-menu .content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        .side-menu .content.open {
-            max-height: 500px;
-        }
-        .side-menu p, .side-menu a {
-            color: #555;
-            margin: 5px 0;
-            font-size: 14px;
-        }
-        .side-menu a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-        .side-menu a:hover {
-            text-decoration: underline;
-        }
-        .close-button {
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: #555;
-            cursor: pointer;
-            position: absolute;
-            top: 10px;
-            right: 10px;
+
+        .collapsible:hover {
+            background: rgba(255, 255, 255, 0.4);
         }
     </style>
 </head>
 <body>
-    <!-- Side menu button -->
-    <button class="menu-button" onclick="toggleMenu()">☰</button>
-
-    <!-- Side menu -->
-    <div class="side-menu" id="sideMenu">
-        <button class="close-button" onclick="toggleMenu()">✖</button>
-        <h3 onclick="toggleContent('contactUs')">Contact Us</h3>
-        <div id="contactUs" class="content">
-            <p>Phone: (123) 456-7890</p>
-            <p>Email: contact@dropshipperfeed.com</p>
+    <button class="menu-button" onclick="toggleMenu()">Menu</button>
+    <div class="menu-panel" id="menuPanel">
+        <h2>Menu</h2>
+        <div class="menu-item collapsible" onclick="toggleCollapsible(this)">About Us</div>
+        <div class="collapsible-content">
+            <p>Welcome to Dropshipper Feed! We connect you with top-tier products for dropshipping. With this platform, our goal is to simplify product selection for your e-commerce business.</p>
         </div>
-        <h3 onclick="toggleContent('aboutUs')">About Us</h3>
-        <div id="aboutUs" class="content">
-            <p>Welcome to Dropshipper Feed, your ultimate resource for discovering amazing products. 
-               We connect dropshippers to popular products, offering a seamless shopping experience.</p>
-            <p>Our curated catalog is designed to help you easily source products to grow your online business!</p>
+        <div class="menu-item collapsible" onclick="toggleCollapsible(this)">Contact Us</div>
+        <div class="collapsible-content">
+            <p>Phone: (123) 456-7890<br>Email: support@dropshipperfeed.com</p>
         </div>
-        <h3 onclick="toggleContent('youtube')">YouTube</h3>
-        <div id="youtube" class="content">
-            <a href="https://www.youtube.com" target="_blank">Visit Dropshipper Feed's YouTube Channel</a>
+        <div class="menu-item collapsible" onclick="toggleCollapsible(this)">YouTube</div>
+        <div class="collapsible-content">
+            <p><a href="https://www.youtube.com/" target="_blank" style="color: #fff;">Visit Dropshipper Feed on YouTube</a></p>
         </div>
     </div>
-
     <div class="container">
         <h1>Welcome to Dropshipper Feed</h1>
         <div class="search-bar">
@@ -171,70 +162,41 @@
         <div class="product-grid" id="productGrid">
             <!-- Product 1 -->
             <div class="product">
-                <img src="bag.jpeg" alt="Travel Bag">
+                <img src="bag.jpeg" alt="Foldable Travel Bag">
                 <h3>Foldable Travel Bag</h3>
                 <a href="#">View Product</a>
             </div>
             <!-- Product 2 -->
             <div class="product">
-                <img src="net.jpeg" alt="Basketball Net">
+                <img src="net.jpeg" alt="Portable Basketball Net">
                 <h3>Portable Basketball Net</h3>
                 <a href="#">View Product</a>
             </div>
             <!-- Product 3 -->
             <div class="product">
-                <img src="alpaca.jpeg" alt="Alpaca">
+                <img src="alpaca.jpeg" alt="Alpaca Figurine">
                 <h3>Alpaca Figurine</h3>
                 <a href="#">View Product</a>
             </div>
             <!-- Product 4 -->
             <div class="product">
-                <img src="alpaca.jpeg" alt="Alpaca">
+                <img src="alpaca.jpeg" alt="Alpaca Keychain">
                 <h3>Alpaca Keychain</h3>
                 <a href="#">View Product</a>
             </div>
         </div>
     </div>
-
     <script>
-        const searchInput = document.getElementById('search');
-        const productGrid = document.getElementById('productGrid');
-        const products = Array.from(productGrid.children);
+        const menuPanel = document.getElementById('menuPanel');
 
-        const filterAndSortProducts = () => {
-            const query = searchInput.value.toLowerCase();
-            const filteredProducts = products.filter(product => {
-                const title = product.querySelector('h3').innerText.toLowerCase();
-                return title.includes(query);
-            }).sort((a, b) => {
-                const titleA = a.querySelector('h3').innerText.toLowerCase();
-                const titleB = b.querySelector('h3').innerText.toLowerCase();
-                return titleA.localeCompare(titleB);
-            });
-            productGrid.innerHTML = '';
-            filteredProducts.forEach(product => productGrid.appendChild(product));
-        };
+        function toggleMenu() {
+            menuPanel.classList.toggle('open');
+        }
 
-        searchInput.addEventListener('input', filterAndSortProducts);
-
-        window.addEventListener('load', () => {
-            products.sort((a, b) => {
-                const titleA = a.querySelector('h3').innerText.toLowerCase();
-                const titleB = b.querySelector('h3').innerText.toLowerCase();
-                return titleA.localeCompare(titleB);
-            });
-            products.forEach(product => productGrid.appendChild(product));
-        });
-
-        const sideMenu = document.getElementById('sideMenu');
-        const toggleMenu = () => {
-            sideMenu.classList.toggle('open');
-        };
-
-        const toggleContent = (id) => {
-            const content = document.getElementById(id);
-            content.classList.toggle('open');
-        };
+        function toggleCollapsible(element) {
+            const content = element.nextElementSibling;
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        }
     </script>
 </body>
 </html>
